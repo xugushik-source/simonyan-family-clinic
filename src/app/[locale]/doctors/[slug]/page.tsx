@@ -101,13 +101,17 @@ export default async function DoctorPage({
         <div className="rounded-xl border border-forest-100 bg-white p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-teal-600">{t("experience")}</p>
           <p className="mt-1 text-sm font-medium text-forest-900">
-            {doctor.experienceYears} {tCommon("years")}
+            {doctor.experienceYears !== null
+              ? `${doctor.experienceYears} ${tCommon("years")}`
+              : tCommon("toBeConfirmed")}
           </p>
         </div>
         <div className="rounded-xl border border-forest-100 bg-white p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-teal-600">{t("languages")}</p>
           <p className="mt-1 text-sm font-medium text-forest-900">
-            {doctor.languages.map((l) => languageLabel[l] ?? l).join(", ")}
+            {doctor.languages.length > 0
+              ? doctor.languages.map((l) => languageLabel[l] ?? l).join(", ")
+              : tCommon("toBeConfirmed")}
           </p>
         </div>
         <div className="rounded-xl border border-forest-100 bg-white p-4">

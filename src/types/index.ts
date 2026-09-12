@@ -96,8 +96,9 @@ export interface Doctor {
   position: LocalizedText;
   specialties: LocalizedList;
   departmentSlugs: string[];
-  experienceYears: number;
-  languages: string[]; // e.g. ["ru", "ka", "hy", "en"]
+  /** null when not yet confirmed — render as "to be confirmed", never a made-up number. */
+  experienceYears: number | null;
+  languages: string[]; // e.g. ["ru", "ka", "hy", "en"] — empty when not yet confirmed
   education: LocalizedList;
   training: LocalizedList;
   certificates: LocalizedList;

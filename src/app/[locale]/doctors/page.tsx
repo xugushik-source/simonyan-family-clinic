@@ -50,7 +50,10 @@ export default async function DoctorsPage({
               </p>
               <p className="mt-1 text-sm text-ink-500">{doctor.position[typedLocale]}</p>
               <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-teal-600">
-                {tCommon("experience")}: {doctor.experienceYears} {tCommon("years")}
+                {tCommon("experience")}:{" "}
+                {doctor.experienceYears !== null
+                  ? `${doctor.experienceYears} ${tCommon("years")}`
+                  : tCommon("toBeConfirmed")}
               </p>
             </Link>
             <div className="mt-4 flex gap-2">

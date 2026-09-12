@@ -36,7 +36,10 @@ export function DoctorsPreview() {
               </p>
               <p className="w-full break-words text-sm text-ink-500">{doctor.position[locale]}</p>
               <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-teal-600">
-                {tCommon("experience")}: {doctor.experienceYears} {tCommon("years")}
+                {tCommon("experience")}:{" "}
+                {doctor.experienceYears !== null
+                  ? `${doctor.experienceYears} ${tCommon("years")}`
+                  : tCommon("toBeConfirmed")}
               </p>
             </Link>
           ))}

@@ -7,6 +7,7 @@ import { routing, locales, localeHtmlLang, type Locale } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
+import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { organizationSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
@@ -70,6 +71,7 @@ export default async function LocaleLayout({
       <body className={`${fontClassByLocale[typedLocale]} bg-milk text-ink-900 antialiased`}>
         <NextIntlClientProvider>
           <JsonLd data={organizationSchema(typedLocale)} />
+          <LoadingScreen />
           <Header />
           <main className="min-h-screen pb-16 lg:pb-0">{children}</main>
           <Footer locale={typedLocale} />

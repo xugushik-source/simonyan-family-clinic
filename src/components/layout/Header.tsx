@@ -49,9 +49,9 @@ export function Header() {
           <Image
             src="/logo-icon.png"
             alt={clinicNameShort[locale]}
-            width={40}
-            height={40}
-            className="h-8 w-8 shrink-0 sm:h-9 sm:w-9"
+            width={56}
+            height={56}
+            className="h-11 w-11 shrink-0 sm:h-14 sm:w-14"
             priority
           />
           <span className="hidden sm:inline">{clinicNameShort[locale]}</span>
