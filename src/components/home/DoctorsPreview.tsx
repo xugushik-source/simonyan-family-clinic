@@ -28,13 +28,13 @@ export function DoctorsPreview() {
             <Link
               key={doctor.id}
               href={`/doctors/${doctor.slug}`}
-              className="flex flex-col items-center rounded-2xl border border-forest-100 bg-white p-6 text-center transition-all hover:-translate-y-0.5 hover:shadow-soft"
+              className="flex min-w-0 flex-col items-center rounded-2xl border border-forest-100 bg-white p-6 text-center transition-all hover:-translate-y-0.5 hover:shadow-soft"
             >
               <DoctorAvatar name={doctor.name[locale]} size="lg" />
-              <p className="mt-4 font-serif text-lg font-semibold text-forest-900">
+              <p className="mt-4 w-full break-words font-serif text-lg font-semibold text-forest-900">
                 {doctor.name[locale]}
               </p>
-              <p className="mt-1 text-sm text-ink-500">{doctor.position[locale]}</p>
+              <p className="w-full break-words text-sm text-ink-500">{doctor.position[locale]}</p>
               <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-teal-600">
                 {tCommon("experience")}: {doctor.experienceYears} {tCommon("years")}
               </p>

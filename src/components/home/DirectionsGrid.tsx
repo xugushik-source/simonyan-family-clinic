@@ -19,12 +19,12 @@ export function DirectionsGrid() {
             <Link
               key={d.slug}
               href={`/departments/${d.slug}`}
-              className="group flex flex-col items-start gap-3 rounded-2xl border border-forest-100 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-forest-300 hover:shadow-soft"
+              className="group flex min-w-0 flex-col items-start gap-3 rounded-2xl border border-forest-100 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-forest-300 hover:shadow-soft"
             >
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-forest-50 text-forest-700 group-hover:bg-forest-700 group-hover:text-milk">
                 <DepartmentIcon icon={d.icon} className="h-5 w-5" />
               </span>
-              <span className="text-sm font-semibold text-forest-900">{d.name[locale]}</span>
+              <span className="w-full break-words text-sm font-semibold text-forest-900">{d.name[locale]}</span>
             </Link>
           ))}
         </div>

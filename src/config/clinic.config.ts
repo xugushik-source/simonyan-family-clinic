@@ -24,10 +24,11 @@ export const clinicNameShort: Record<Locale, string> = {
 
 export const clinicBrandInternational = "Simonyan Family Clinic";
 
+// Matches the tagline on the clinic's real logo.
 export const clinicTagline: Record<Locale, string> = {
-  ru: "Медицина для всей семьи",
-  ka: "მედიცინა მთელი ოჯახისთვის",
-  hy: "Բժշկություն ողջ ընտանիքի համար",
+  ru: "Здоровье вашей семьи — наша забота",
+  ka: "თქვენი ოჯახის ჯანმრთელობა — ჩვენი ზრუნვაა",
+  hy: "Ձեր ընտանիքի առողջությունը մեր հոգածությունն է",
 };
 
 export const contact = {

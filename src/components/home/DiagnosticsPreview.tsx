@@ -26,9 +26,9 @@ export function DiagnosticsPreview() {
             <Link
               key={d.slug}
               href="/diagnostics"
-              className="rounded-2xl border border-forest-100 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-soft"
+              className="min-w-0 rounded-2xl border border-forest-100 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-soft"
             >
-              <p className="font-serif text-base font-semibold text-forest-900">{d.name[locale]}</p>
+              <p className="break-words font-serif text-base font-semibold text-forest-900">{d.name[locale]}</p>
               <p className="mt-2 text-sm text-ink-500">{d.shortDescription[locale]}</p>
             </Link>
           ))}

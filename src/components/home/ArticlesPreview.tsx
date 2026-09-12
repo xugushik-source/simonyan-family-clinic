@@ -27,15 +27,15 @@ export function ArticlesPreview() {
             <Link
               key={article.slug}
               href={`/articles/${article.slug}`}
-              className="flex flex-col rounded-2xl border border-forest-100 bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-soft"
+              className="flex min-w-0 flex-col rounded-2xl border border-forest-100 bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-soft"
             >
               <p className="text-xs font-semibold uppercase tracking-wide text-teal-600">
                 {formatLocalizedDate(article.publishedAt, locale)}
               </p>
-              <p className="mt-3 font-serif text-lg font-semibold text-forest-900">
+              <p className="mt-3 min-w-0 break-words font-serif text-lg font-semibold text-forest-900">
                 {article.title[locale]}
               </p>
-              <p className="mt-2 text-sm text-ink-500">{article.excerpt[locale]}</p>
+              <p className="min-w-0 break-words text-sm text-ink-500">{article.excerpt[locale]}</p>
             </Link>
           ))}
         </div>
