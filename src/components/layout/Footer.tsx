@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Phone, MessageCircle } from "lucide-react";
+import { Phone, MessageCircle, Facebook, Instagram } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import {
   clinicName,
@@ -8,8 +8,14 @@ import {
   contact,
   address,
   openingHours,
+  socials,
 } from "@/config/clinic.config";
 import type { Locale } from "@/i18n/routing";
+
+const socialIcons: Record<string, typeof Facebook> = {
+  Facebook: Facebook,
+  Instagram: Instagram,
+};
 
 const navKeys = [
   ["about", "/about"],
@@ -75,6 +81,41 @@ export function Footer({ locale }: { locale: Locale }) {
             </li>
             <li className="pt-1 text-forest-300">{address[locale]}</li>
           </ul>
+
+          {/*
+            Always render a slot for each social platform, even before the
+            real accounts are confirmed — links go live the moment an href
+            is filled in in clinic.config.ts, no layout changes needed.
+          */}
+          <div className="mt-4 flex gap-3">
+            {socials.map((social) => {
+              const Icon = socialIcons[social.name];
+              if (!Icon) return null;
+              if (social.href) {
+                return (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-forest-700 text-forest-100 hover:border-forest-500 hover:text-white"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                );
+              }
+              return (
+                <span
+                  key={social.name}
+                  aria-hidden="true"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-forest-800 text-forest-600"
+                >
+                  <Icon className="h-4 w-4" />
+                </span>
+              );
+            })}
+          </div>
         </div>
 
         <div>

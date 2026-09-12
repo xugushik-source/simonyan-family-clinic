@@ -13,6 +13,7 @@ import { Link } from "@/i18n/navigation";
 import { services, getServiceBySlug } from "@/data/services";
 import { getDoctorById } from "@/data/doctors";
 import { getFaqById } from "@/data/faq";
+import { formatPrice } from "@/lib/utils";
 import { getPriceById } from "@/data/prices";
 import { ChevronDown, CheckCircle2 } from "lucide-react";
 
@@ -91,8 +92,11 @@ export default async function ServicePage({
         </CTAButton>
         {price && (
           <span className="text-sm font-semibold text-teal-700">
-            {t("price")}: {price.priceFrom ? `${tCommon("priceFrom")} ` : ""}
-            {price.amount} ₾
+            {t("price")}:{" "}
+            {formatPrice(price.amount, typedLocale, {
+              priceFrom: price.priceFrom,
+              fromLabel: tCommon("priceFrom"),
+            })}
           </span>
         )}
         {service.durationMinutes && (

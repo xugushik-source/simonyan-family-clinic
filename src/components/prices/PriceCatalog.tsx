@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { Search } from "lucide-react";
 import { prices } from "@/data/prices";
 import { CTAButton } from "@/components/shared/CTAButton";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import type { Locale } from "@/i18n/routing";
 import type { PriceCategory } from "@/types";
 
@@ -88,8 +88,10 @@ export function PriceCatalog() {
                 </div>
                 <div className="flex shrink-0 items-center gap-4">
                   <span className="text-sm font-semibold text-teal-700">
-                    {price.priceFrom ? `${tCommon("priceFrom")} ` : ""}
-                    {price.amount} ₾
+                    {formatPrice(price.amount, locale, {
+                      priceFrom: price.priceFrom,
+                      fromLabel: tCommon("priceFrom"),
+                    })}
                   </span>
                   <CTAButton
                     href={price.serviceSlug ? `/services/${price.serviceSlug}` : "/booking"}

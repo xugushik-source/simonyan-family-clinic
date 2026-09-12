@@ -16,6 +16,7 @@ import { getServiceBySlug } from "@/data/services";
 import { getDiagnosticBySlug } from "@/data/diagnostics";
 import { getFaqById } from "@/data/faq";
 import { getPriceById } from "@/data/prices";
+import { formatPrice } from "@/lib/utils";
 import { DoctorAvatar } from "@/components/shared/DoctorAvatar";
 import { ChevronDown, CheckCircle2 } from "lucide-react";
 
@@ -143,7 +144,10 @@ export default async function DepartmentPage({
                   <span className="text-sm font-medium text-forest-900">{service.name[typedLocale]}</span>
                   {price && (
                     <span className="text-sm font-semibold text-teal-700">
-                      {price.priceFrom ? tCommon("priceFrom") : ""} {price.amount} ₾
+                      {formatPrice(price.amount, typedLocale, {
+                        priceFrom: price.priceFrom,
+                        fromLabel: tCommon("priceFrom"),
+                      })}
                     </span>
                   )}
                 </Link>

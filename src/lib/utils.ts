@@ -1,8 +1,27 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { Locale } from "@/i18n/routing";
+import { currency } from "@/config/clinic.config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+/**
+ * Formats an amount with the clinic's currency (GEL/₾), handling the
+ * "starting from" label correctly per language: Russian prefixes it
+ * ("от 100 ₾"), while Georgian and Armenian suffix it directly onto the
+ * number ("100 ₾-დან", "100 ₾-ից") — gluing the label on the wrong side
+ * reads as broken grammar, not just an odd word order.
+ */
+export function formatPrice(
+  amount: number,
+  locale: Locale,
+  options?: { priceFrom?: boolean; fromLabel?: string }
+): string {
+  const value = `${amount} ${currency[locale]}`;
+  if (!options?.priceFrom || !options.fromLabel) return value;
+  return locale === "ru" ? `${options.fromLabel} ${value}` : `${value}${options.fromLabel}`;
 }
 
 // Month names are hardcoded rather than delegated to Intl.DateTimeFormat:

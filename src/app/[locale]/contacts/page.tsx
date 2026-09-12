@@ -38,7 +38,6 @@ export default async function ContactsPage({
   const tNav = await getTranslations({ locale, namespace: "nav" });
 
   const hasCoordinates = coordinates.lat !== null && coordinates.lng !== null;
-  const activeSocials = socials.filter((s) => s.href);
 
   return (
     <Container className="py-10">
@@ -94,26 +93,35 @@ export default async function ContactsPage({
             </dt>
             <dd className="mt-1 text-sm text-ink-700">{openingHours[typedLocale]}</dd>
           </div>
-          {activeSocials.length > 0 && (
-            <div>
-              <dt className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-teal-600">
-                <Share2 className="h-4 w-4" /> {t("social")}
-              </dt>
-              <dd className="mt-1 flex gap-3">
-                {activeSocials.map((s) => (
+          <div>
+            <dt className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-teal-600">
+              <Share2 className="h-4 w-4" /> {t("social")}
+            </dt>
+            {/*
+              Always show a slot per platform — links go live the moment a
+              real account is confirmed in clinic.config.ts, no layout
+              change needed. Unconfirmed ones show as muted with "soon".
+            */}
+            <dd className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
+              {socials.map((s) =>
+                s.href ? (
                   <a
                     key={s.name}
-                    href={s.href!}
+                    href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-forest-900 hover:underline"
                   >
                     {s.name}
                   </a>
-                ))}
-              </dd>
-            </div>
-          )}
+                ) : (
+                  <span key={s.name} className="text-sm text-ink-300">
+                    {s.name} <span className="italic">({t("socialSoon")})</span>
+                  </span>
+                )
+              )}
+            </dd>
+          </div>
         </dl>
 
         <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-forest-200 bg-forest-50/50 p-8 text-center">

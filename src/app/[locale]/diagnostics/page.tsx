@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { CTAButton } from "@/components/shared/CTAButton";
 import { diagnostics } from "@/data/diagnostics";
 import { getPriceById } from "@/data/prices";
+import { formatPrice } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -45,8 +46,10 @@ export default async function DiagnosticsPage({
                 <p className="font-serif text-lg font-semibold text-forest-900">{d.name[typedLocale]}</p>
                 {price && (
                   <span className="shrink-0 text-sm font-semibold text-teal-700">
-                    {price.priceFrom ? `${tCommon("priceFrom")} ` : ""}
-                    {price.amount} ₾
+                    {formatPrice(price.amount, typedLocale, {
+                      priceFrom: price.priceFrom,
+                      fromLabel: tCommon("priceFrom"),
+                    })}
                   </span>
                 )}
               </div>

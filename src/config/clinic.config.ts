@@ -59,7 +59,12 @@ export const openingHours: Record<Locale, string> = {
   hy: "Աշխատանքային ժամերը ճշտվում են",
 };
 
-/** PLACEHOLDER — fill in once social accounts are confirmed. */
+/**
+ * Social accounts. href is null until the clinic confirms the real
+ * account/page — the UI still renders a slot for each platform (muted,
+ * non-clickable) so the layout is ready the moment a link is added here.
+ * Add more entries (TikTok, YouTube, Telegram, …) the same way.
+ */
 export const socials: { name: string; href: string | null }[] = [
   { name: "Facebook", href: null },
   { name: "Instagram", href: null },
@@ -72,6 +77,8 @@ export const brandColors = {
   milk: "#fbfaf7",
 };
 
+// Georgian Lari — the clinic operates in Georgia (GEL).
+export const currencyCode = "GEL";
 export const currency: Record<Locale, string> = {
   ru: "₾",
   ka: "₾",

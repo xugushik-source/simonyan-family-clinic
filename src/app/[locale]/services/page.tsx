@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { Link } from "@/i18n/navigation";
 import { services } from "@/data/services";
 import { getPriceById } from "@/data/prices";
+import { formatPrice } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -49,8 +50,10 @@ export default async function ServicesPage({
               <p className="mt-2 flex-1 text-sm text-ink-500">{service.shortDescription[typedLocale]}</p>
               {price && (
                 <p className="mt-4 text-sm font-semibold text-teal-700">
-                  {price.priceFrom ? `${tCommon("priceFrom")} ` : ""}
-                  {price.amount} ₾
+                  {formatPrice(price.amount, typedLocale, {
+                    priceFrom: price.priceFrom,
+                    fromLabel: tCommon("priceFrom"),
+                  })}
                 </p>
               )}
             </Link>
