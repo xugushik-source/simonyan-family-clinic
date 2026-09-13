@@ -8,7 +8,7 @@ import { Menu, X, Phone } from "lucide-react";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { CTAButton } from "@/components/shared/CTAButton";
 import { Container } from "@/components/shared/Container";
-import { clinicNameShort, clinicNameMobile, contact } from "@/config/clinic.config";
+import { clinicNameShort, contact } from "@/config/clinic.config";
 import { useParams } from "next/navigation";
 import type { Locale } from "@/i18n/routing";
 
@@ -44,7 +44,7 @@ export function Header() {
       <Container className="flex h-16 max-w-[100rem] items-center justify-between gap-2 px-3 sm:h-20 sm:gap-4 sm:px-6">
         <Link
           href="/"
-          className="flex min-w-0 shrink items-center gap-1.5 font-serif text-sm font-semibold whitespace-nowrap text-forest-900 sm:gap-2 sm:text-lg"
+          className="flex min-w-0 shrink items-center gap-1.5 font-serif text-xs font-semibold whitespace-nowrap text-forest-900 sm:gap-2 sm:text-lg"
         >
           <Image
             src="/logo-icon.png"
@@ -54,8 +54,7 @@ export function Header() {
             className="h-12 w-12 shrink-0 sm:h-16 sm:w-16"
             priority
           />
-          <span className="truncate sm:hidden">{clinicNameMobile[locale]}</span>
-          <span className="hidden sm:inline">{clinicNameShort[locale]}</span>
+          <span className="truncate">{clinicNameShort[locale]}</span>
         </Link>
 
         <nav className="hidden items-center gap-4 min-[1700px]:flex">

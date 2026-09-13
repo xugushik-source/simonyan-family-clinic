@@ -22,16 +22,6 @@ export const clinicNameShort: Record<Locale, string> = {
   hy: "Սիմոնյանների կլինիկա",
 };
 
-// Family name only (plural, "the Simonyans") — used in the header on
-// narrow phones, where there isn't room next to the logo, language
-// switcher and menu button for the full short name (especially the
-// longer Georgian/Armenian variants).
-export const clinicNameMobile: Record<Locale, string> = {
-  ru: "Симоняны",
-  ka: "სიმონიანები",
-  hy: "Սիմոնյաններ",
-};
-
 export const clinicBrandInternational = "Simonyan Family Clinic";
 
 // Matches the tagline on the clinic's real logo.
