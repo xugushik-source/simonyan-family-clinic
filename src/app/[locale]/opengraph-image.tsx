@@ -40,7 +40,7 @@ export default function OpengraphImage() {
           Simonyan Family Clinic
         </div>
         <div style={{ marginTop: 10, fontSize: 26, color: "#39655d" }}>
-          Семейная клиника Симонян
+          Семейная клиника Симонянов
         </div>
       </div>
     ),

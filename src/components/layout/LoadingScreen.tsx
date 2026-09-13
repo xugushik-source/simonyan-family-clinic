@@ -34,7 +34,7 @@ export function LoadingScreen() {
           >
             <Image
               src="/logo-full.png"
-              alt="Simonyan Family Clinic — Семейная клиника Симонян"
+              alt="Simonyan Family Clinic — Семейная клиника Симонянов"
               width={720}
               height={720}
               priority

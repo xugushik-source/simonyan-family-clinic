@@ -11,24 +11,25 @@ import type { Locale } from "@/i18n/routing";
  */
 
 export const clinicName: Record<Locale, string> = {
-  ru: "Семейная клиника Симонян",
-  ka: "სიმონიანის საოჯახო კლინიკა",
-  hy: "Սիմոնյանի ընտանեկան կլինիկա",
+  ru: "Семейная клиника Симонянов",
+  ka: "სიმონიანების საოჯახო კლინიკა",
+  hy: "Սիմոնյանների ընտանեկան կլինիկա",
 };
 
 export const clinicNameShort: Record<Locale, string> = {
-  ru: "Клиника Симонян",
-  ka: "კლინიკა სიმონიანი",
-  hy: "Սիմոնյան կլինիկա",
+  ru: "Клиника Симонянов",
+  ka: "სიმონიანების კლინიკა",
+  hy: "Սիմոնյանների կլինիկա",
 };
 
-// Surname only — used in the header on narrow phones, where there isn't
-// room next to the logo, language switcher and menu button for the full
-// short name (especially the longer Georgian/Armenian variants).
+// Family name only (plural, "the Simonyans") — used in the header on
+// narrow phones, where there isn't room next to the logo, language
+// switcher and menu button for the full short name (especially the
+// longer Georgian/Armenian variants).
 export const clinicNameMobile: Record<Locale, string> = {
-  ru: "Симонян",
-  ka: "სიმონიანი",
-  hy: "Սիմոնյան",
+  ru: "Симоняны",
+  ka: "სიმონიანები",
+  hy: "Սիմոնյաններ",
 };
 
 export const clinicBrandInternational = "Simonyan Family Clinic";
