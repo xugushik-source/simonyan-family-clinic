@@ -52,11 +52,11 @@ export const coordinates = {
   lng: null as number | null,
 };
 
-/** PLACEHOLDER — replace with the clinic's real working hours. */
+// Confirmed: open daily 08:00–20:00, weekends included.
 export const openingHours: Record<Locale, string> = {
-  ru: "Режим работы уточняется",
-  ka: "სამუშაო საათები დაზუსტდება",
-  hy: "Աշխատանքային ժամերը ճշտվում են",
+  ru: "Ежедневно: 08:00–20:00",
+  ka: "ყოველდღე: 08:00–20:00",
+  hy: "Ամեն օր՝ 08:00–20:00",
 };
 
 /**

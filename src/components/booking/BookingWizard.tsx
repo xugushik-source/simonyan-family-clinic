@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeft, ChevronRight, MessageCircle, CheckCircle2 } from "lucide-react";
 import { departments } from "@/data/departments";
 import { doctors, getDoctorById } from "@/data/doctors";
-import { getAvailableSlots } from "@/data/schedules";
+import { getAvailableSlots, getScheduleForDoctor } from "@/data/schedules";
 import { buildBookingWhatsAppLink } from "@/lib/whatsapp";
 import { formatLocalizedDate, cn } from "@/lib/utils";
 import { bookingConfig } from "@/config/clinic.config";
@@ -103,12 +103,23 @@ export function BookingWizard({
     [departmentSlug]
   );
 
-  const days = useMemo(() => getNextDays(bookingConfig.advanceBookingDays), []);
-
   // When the patient picks "any doctor", fall back to the first doctor in
   // the department to compute representative availability — there is no
   // real department-wide calendar yet, only per-doctor demo schedules.
   const slotSourceDoctorId = doctorId ?? availableDoctors[0]?.id;
+  const schedule = slotSourceDoctorId ? getScheduleForDoctor(slotSourceDoctorId) : undefined;
+
+  // Only offer dates the doctor actually works — otherwise the patient
+  // picks a Sunday, advances, and hits a dead-end "no slots" message that
+  // reads as the site being broken rather than "this doctor is off today".
+  const days = useMemo(() => {
+    const all = getNextDays(bookingConfig.advanceBookingDays);
+    if (!schedule) return all;
+    return all.filter((d) => {
+      const weekday = new Date(`${d}T00:00:00`).getDay();
+      return schedule.workingDays.includes(weekday) && !schedule.unavailableDates.includes(d);
+    });
+  }, [schedule]);
 
   const availableTimes = useMemo(() => {
     if (!slotSourceDoctorId || !date) return [];
@@ -225,6 +236,8 @@ export function BookingWizard({
                   onClick={() => {
                     setDepartmentSlug(d.slug);
                     setDoctorId(undefined);
+                    setDate(undefined);
+                    setTime(undefined);
                   }}
                   className={cn(
                     "rounded-xl border p-3 text-left text-sm font-medium transition-colors",
@@ -248,7 +261,11 @@ export function BookingWizard({
             <div className="flex flex-col gap-2">
               <button
                 type="button"
-                onClick={() => setDoctorId(undefined)}
+                onClick={() => {
+                  setDoctorId(undefined);
+                  setDate(undefined);
+                  setTime(undefined);
+                }}
                 className={cn(
                   "rounded-xl border p-3 text-left text-sm font-medium transition-colors",
                   !doctorId
@@ -262,7 +279,11 @@ export function BookingWizard({
                 <button
                   key={d.id}
                   type="button"
-                  onClick={() => setDoctorId(d.id)}
+                  onClick={() => {
+                    setDoctorId(d.id);
+                    setDate(undefined);
+                    setTime(undefined);
+                  }}
                   className={cn(
                     "rounded-xl border p-3 text-left text-sm font-medium transition-colors",
                     doctorId === d.id

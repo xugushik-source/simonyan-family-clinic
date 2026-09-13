@@ -2,16 +2,19 @@ import type { DoctorSchedule } from "@/types";
 import { doctors } from "./doctors";
 
 /**
- * DEMO SCHEDULES. Every doctor works Mon–Fri (1–5), 09:00–18:00, with a
- * standard slot length. This is a placeholder shape only — the real
- * schedule is expected to come from a CRM/calendar integration later
- * (see task requirement: keep the interface stable for that swap).
+ * Clinic works daily, 08:00–20:00, weekends included — it's not yet
+ * confirmed which doctors/lab staff are on duty on any given weekend,
+ * so every doctor is shown as available all 7 days for now. Real
+ * per-doctor days off can be added later via unavailableDates. This is
+ * a placeholder shape only — the real schedule is expected to come from
+ * a CRM/calendar integration later (see task requirement: keep the
+ * interface stable for that swap).
  */
 export const schedules: DoctorSchedule[] = doctors.map((doctor) => ({
   doctorId: doctor.id,
-  workingDays: [1, 2, 3, 4, 5],
-  dayStart: "09:00",
-  dayEnd: "18:00",
+  workingDays: [0, 1, 2, 3, 4, 5, 6],
+  dayStart: "08:00",
+  dayEnd: "20:00",
   appointmentDurationMinutes: 30,
   unavailableDates: [],
   unavailableSlots: [],
