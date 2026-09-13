@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -51,12 +51,42 @@ export function BookingWizard({
   const params = useParams();
   const locale = params.locale as Locale;
 
-  const [step, setStep] = useState(0);
-  const [departmentSlug, setDepartmentSlug] = useState<string | undefined>(initialDepartmentSlug);
+  // Coming from a doctor's own profile/card already answers "which
+  // specialty" — picking a surgeon means surgery, no need to ask again.
+  // Derive the department from the pre-selected doctor and skip straight
+  // past whichever steps are already answered.
+  const preselectedDoctor = initialDoctorId ? getDoctorById(initialDoctorId) : undefined;
+  const resolvedInitialDepartment = initialDepartmentSlug ?? preselectedDoctor?.departmentSlugs[0];
+
+  const [step, setStep] = useState(() => {
+    if (initialDoctorId && resolvedInitialDepartment) return 2; // date
+    if (resolvedInitialDepartment) return 1; // doctor
+    return 0; // department
+  });
+  const [departmentSlug, setDepartmentSlug] = useState<string | undefined>(resolvedInitialDepartment);
   const [doctorId, setDoctorId] = useState<string | undefined>(initialDoctorId);
   const [date, setDate] = useState<string | undefined>();
   const [time, setTime] = useState<string | undefined>();
   const [submitted, setSubmitted] = useState(false);
+
+  // After every step change (and on submit), bring the wizard card back
+  // into view. Steps vary a lot in height (13 department buttons vs. a
+  // short form), so without this the page keeps its old scroll position
+  // and can land the patient at the very bottom of the site, well past
+  // the "Далее" button, after every single click.
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const el = cardRef.current;
+    if (!el) return;
+    const headerOffset = 96;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({ top, behavior: "smooth" });
+  }, [step, submitted]);
 
   const {
     register,
@@ -140,7 +170,10 @@ export function BookingWizard({
       comment: values.comment,
     });
     return (
-      <div className="mx-auto max-w-xl rounded-2xl border border-forest-100 bg-white p-8 text-center shadow-soft">
+      <div
+        ref={cardRef}
+        className="mx-auto max-w-xl rounded-2xl border border-forest-100 bg-white p-8 text-center shadow-soft"
+      >
         <CheckCircle2 className="mx-auto h-12 w-12 text-teal-600" />
         <h2 className="mt-4 font-serif text-2xl font-semibold text-forest-900">
           {t("submit")}
@@ -178,7 +211,7 @@ export function BookingWizard({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-forest-100 bg-white p-6 shadow-soft sm:p-8">
+      <div ref={cardRef} className="rounded-2xl border border-forest-100 bg-white p-6 shadow-soft sm:p-8">
         {step === 0 && (
           <div>
             <h2 className="mb-4 font-serif text-xl font-semibold text-forest-900">
