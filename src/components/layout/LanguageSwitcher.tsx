@@ -14,7 +14,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex items-center gap-0.5 rounded-full border border-forest-200 bg-white/60 p-1",
+        "flex items-center gap-0 rounded-full border border-forest-200 bg-white/60 p-0.5 sm:gap-0.5 sm:p-1",
         className
       )}
       role="group"
@@ -26,7 +26,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
           type="button"
           onClick={() => router.replace(pathname, { locale })}
           className={cn(
-            "rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wide transition-colors",
+            "rounded-full px-1.5 py-1 text-[11px] font-bold uppercase tracking-wide transition-colors sm:px-2.5 sm:text-xs",
             locale === activeLocale
               ? "bg-forest-700 text-milk"
               : "text-forest-700 hover:bg-forest-50"
