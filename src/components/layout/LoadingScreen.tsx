@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { clinicName, clinicTagline, clinicBrandInternational } from "@/config/clinic.config";
+import { withBasePath } from "@/lib/utils";
 import type { Locale } from "@/i18n/routing";
 
 /**
@@ -41,7 +42,7 @@ export function LoadingScreen() {
             className="flex flex-col items-center gap-4 px-6 text-center"
           >
             <Image
-              src="/logo-icon.png"
+              src={withBasePath("/logo-icon.png")}
               alt={clinicName[locale]}
               width={160}
               height={160}

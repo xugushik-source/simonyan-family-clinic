@@ -8,6 +8,19 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * Prefixes a root-relative public asset path with the app's basePath.
+ * next/image normally does this on its own, but not for the plain
+ * `<img>` fallback it renders when `images.unoptimized` is set (as it
+ * must be for a static export, e.g. the GitHub Pages build) — without
+ * this, local images 404 once the site is served from a subpath instead
+ * of the domain root. A no-op on Vercel, where basePath is unset.
+ */
+export function withBasePath(path: string): string {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+  return `${basePath}${path}`;
+}
+
+/**
  * Formats an amount with the clinic's currency (GEL/₾), handling the
  * "starting from" label correctly per language: Russian prefixes it
  * ("от 100 ₾"), while Georgian and Armenian suffix it directly onto the

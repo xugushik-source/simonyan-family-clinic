@@ -10,6 +10,7 @@ import { CTAButton } from "@/components/shared/CTAButton";
 import { Container } from "@/components/shared/Container";
 import { clinicNameShort, contact } from "@/config/clinic.config";
 import { useParams } from "next/navigation";
+import { withBasePath } from "@/lib/utils";
 import type { Locale } from "@/i18n/routing";
 
 const navKeys = [
@@ -47,7 +48,7 @@ export function Header() {
           className="flex min-w-0 shrink items-center gap-1.5 font-serif text-xs font-semibold whitespace-nowrap text-forest-900 sm:gap-2 sm:text-lg"
         >
           <Image
-            src="/logo-icon.png"
+            src={withBasePath("/logo-icon.png")}
             alt={clinicNameShort[locale]}
             width={72}
             height={72}

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +10,7 @@ import { ChevronLeft, ChevronRight, MessageCircle, CheckCircle2 } from "lucide-r
 import { departments } from "@/data/departments";
 import { doctors, getDoctorById } from "@/data/doctors";
 import { getAvailableSlots, getScheduleForDoctor } from "@/data/schedules";
+import { getServiceBySlug } from "@/data/services";
 import { buildBookingWhatsAppLink } from "@/lib/whatsapp";
 import { formatLocalizedDate, cn } from "@/lib/utils";
 import { bookingConfig } from "@/config/clinic.config";
@@ -39,24 +40,29 @@ function getNextDays(count: number): string[] {
   return out;
 }
 
-export function BookingWizard({
-  initialDepartmentSlug,
-  initialDoctorId,
-}: {
-  initialDepartmentSlug?: string;
-  initialDoctorId?: string;
-}) {
+export function BookingWizard() {
   const t = useTranslations("booking");
   const tCommon = useTranslations("common");
   const params = useParams();
   const locale = params.locale as Locale;
+
+  // Read from the URL client-side (?department=, ?doctor=, ?service=)
+  // instead of via server-side searchParams — this keeps the page fully
+  // static (no per-request server rendering needed just to prefill the
+  // wizard), which a plain static host like GitHub Pages requires.
+  const searchParams = useSearchParams();
+  const initialDepartmentSlug = searchParams.get("department") ?? undefined;
+  const initialDoctorId = searchParams.get("doctor") ?? undefined;
+  const serviceSlug = searchParams.get("service") ?? undefined;
+  const serviceDepartment = serviceSlug ? getServiceBySlug(serviceSlug)?.departmentSlugs[0] : undefined;
 
   // Coming from a doctor's own profile/card already answers "which
   // specialty" — picking a surgeon means surgery, no need to ask again.
   // Derive the department from the pre-selected doctor and skip straight
   // past whichever steps are already answered.
   const preselectedDoctor = initialDoctorId ? getDoctorById(initialDoctorId) : undefined;
-  const resolvedInitialDepartment = initialDepartmentSlug ?? preselectedDoctor?.departmentSlugs[0];
+  const resolvedInitialDepartment =
+    initialDepartmentSlug ?? serviceDepartment ?? preselectedDoctor?.departmentSlugs[0];
 
   const [step, setStep] = useState(() => {
     if (initialDoctorId && resolvedInitialDepartment) return 2; // date

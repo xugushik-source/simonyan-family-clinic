@@ -6,6 +6,8 @@ import { services } from "@/data/services";
 import { doctors } from "@/data/doctors";
 import { articles } from "@/data/articles";
 
+export const dynamic = "force-static";
+
 const staticPaths = [
   "",
   "/about",

@@ -1,9 +1,15 @@
 import { ImageResponse } from "next/og";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { locales } from "@/i18n/routing";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const dynamic = "force-static";
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
 export default function OpengraphImage() {
   const iconPath = join(process.cwd(), "public", "logo-icon.png");

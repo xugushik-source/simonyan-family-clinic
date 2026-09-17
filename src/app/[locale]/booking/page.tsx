@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { buildMetadata } from "@/lib/seo";
 import type { Locale } from "@/i18n/routing";
 import { Container } from "@/components/shared/Container";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { BookingWizard } from "@/components/booking/BookingWizard";
-import { getServiceBySlug } from "@/data/services";
 
 export async function generateMetadata({
   params,
@@ -19,18 +19,13 @@ export async function generateMetadata({
 
 export default async function BookingPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ department?: string; doctor?: string; service?: string }>;
 }) {
   const { locale } = await params;
-  const query = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "booking" });
   const tNav = await getTranslations({ locale, namespace: "nav" });
-
-  const serviceDepartment = query.service ? getServiceBySlug(query.service)?.departmentSlugs[0] : undefined;
 
   return (
     <Container className="py-10">
@@ -41,10 +36,9 @@ export default async function BookingPage({
       </div>
 
       <div className="mt-10">
-        <BookingWizard
-          initialDepartmentSlug={query.department ?? serviceDepartment}
-          initialDoctorId={query.doctor}
-        />
+        <Suspense fallback={null}>
+          <BookingWizard />
+        </Suspense>
       </div>
     </Container>
   );
