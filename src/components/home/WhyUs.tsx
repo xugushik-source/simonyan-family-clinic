@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Heart, Users, Clock, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
 
 const points = [
   { icon: Heart, key: "care" },
@@ -22,10 +23,12 @@ export function WhyUs() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
-        <SectionHeading title={t("title")} subtitle={t("subtitle")} align="center" className="mx-auto" />
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal>
+          <SectionHeading title={t("title")} subtitle={t("subtitle")} align="center" className="mx-auto" />
+        </Reveal>
+        <RevealGroup className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {points.map(({ icon: Icon, key }) => (
-            <div
+            <RevealItem
               key={key}
               className="rounded-2xl border border-forest-100 bg-white p-6 text-center"
             >
@@ -36,9 +39,9 @@ export function WhyUs() {
                 {tPoints(`${key}.title`)}
               </p>
               <p className="mt-2 text-sm text-ink-500">{tPoints(`${key}.text`)}</p>
-            </div>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       </Container>
     </section>
   );

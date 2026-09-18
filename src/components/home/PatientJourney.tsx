@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { UserSearch, CalendarClock, Send, BadgeCheck } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
 
 const steps = [
   { icon: UserSearch, key: 1 },
@@ -16,10 +17,12 @@ export function PatientJourney() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
-        <SectionHeading title={t("title")} subtitle={t("subtitle")} align="center" className="mx-auto" />
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal>
+          <SectionHeading title={t("title")} subtitle={t("subtitle")} align="center" className="mx-auto" />
+        </Reveal>
+        <RevealGroup className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map(({ icon: Icon, key }) => (
-            <div key={key} className="relative rounded-2xl border border-forest-100 bg-white p-6">
+            <RevealItem key={key} className="relative rounded-2xl border border-forest-100 bg-white p-6">
               <span className="absolute -top-3 -left-3 flex h-8 w-8 items-center justify-center rounded-full bg-forest-700 text-sm font-bold text-milk">
                 {key}
               </span>
@@ -30,9 +33,9 @@ export function PatientJourney() {
                 {t(`step${key}Title`)}
               </p>
               <p className="mt-2 text-sm text-ink-500">{t(`step${key}Text`)}</p>
-            </div>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       </Container>
     </section>
   );

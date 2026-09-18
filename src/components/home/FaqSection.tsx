@@ -2,6 +2,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { Reveal } from "@/components/shared/Reveal";
 import { faqItems } from "@/data/faq";
 import type { Locale } from "@/i18n/routing";
 
@@ -13,8 +14,10 @@ export function FaqSection({ ids }: { ids?: string[] }) {
   return (
     <section className="py-16 sm:py-20">
       <Container className="max-w-3xl">
-        <SectionHeading title={t("title")} align="center" className="mx-auto" />
-        <div className="mt-10 divide-y divide-forest-100 rounded-2xl border border-forest-100 bg-white">
+        <Reveal>
+          <SectionHeading title={t("title")} align="center" className="mx-auto" />
+        </Reveal>
+        <Reveal className="mt-10 divide-y divide-forest-100 rounded-2xl border border-forest-100 bg-white">
           {items.map((item) => (
             <details key={item.id} className="group p-5">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-forest-900">
@@ -24,7 +27,7 @@ export function FaqSection({ ids }: { ids?: string[] }) {
               <p className="mt-3 text-sm leading-relaxed text-ink-500">{item.answer[locale]}</p>
             </details>
           ))}
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

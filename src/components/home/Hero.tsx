@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Phone, MessageCircle } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { CTAButton } from "@/components/shared/CTAButton";
+import { Reveal } from "@/components/shared/Reveal";
 import { contact } from "@/config/clinic.config";
 
 export function Hero() {
@@ -13,7 +14,7 @@ export function Hero() {
       <div className="pointer-events-none absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-sand-100/60 blur-3xl" />
 
       <Container className="relative">
-        <div className="mx-auto max-w-3xl text-center">
+        <Reveal className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center rounded-full bg-forest-700/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-forest-700">
             {t("eyebrow")}
           </span>
@@ -48,7 +49,7 @@ export function Hero() {
               WhatsApp
             </a>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );
